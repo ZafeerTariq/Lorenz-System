@@ -79,6 +79,7 @@ int main() {
 			if( ImGui::Button( "Play" ) ) {
 				play = true;
 				x = 0.1; y = 0.0; z = 0.0;
+				window.clear( sf::Color( 14, 26, 37 ) );
 			}
 			if( ImGui::Button( "Stop" ) ) {
 				play = false;
