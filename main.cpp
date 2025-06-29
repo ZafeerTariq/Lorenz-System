@@ -60,9 +60,9 @@ int main() {
 	float y = 0;
 	float z = 0;
 
-	std::vector<sf::Vector3f> points;
 	bool play = false;
 
+	window.clear( sf::Color( 14, 26, 37 ) );
 	while( window.isOpen() ) {
 		sf::Event event;
 		while( window.pollEvent( event ) ) {
@@ -79,7 +79,6 @@ int main() {
 			if( ImGui::Button( "Play" ) ) {
 				play = true;
 				x = 0.1; y = 0.0; z = 0.0;
-				points.clear();
 			}
 			if( ImGui::Button( "Stop" ) ) {
 				play = false;
@@ -89,17 +88,13 @@ int main() {
 			ImGui::SliderFloat( "Beta", &beta, 0, 40 );
 		ImGui::End();
 
-		window.clear( sf::Color( 14, 26, 37 ) );
 		if( play ) {
 			rk4( x, y, z );
-			points.push_back( sf::Vector3f( x, y, z ) );
 
-			for( size_t i = 0; i < points.size(); i++ ) {
-				sf::RectangleShape point( sf::Vector2f( 1, 1 ) );
-				point.setPosition( points[i].x * 10 + SCREEN_WIDTH / 2, -points[i].z * 10 + SCREEN_HEIGHT );
-				point.setFillColor( sf::Color( 17, 253, 169 ) );
-				window.draw( point );
-			}
+			sf::RectangleShape point( sf::Vector2f( 1, 1 ) );
+			point.setPosition( x * 10 + SCREEN_WIDTH / 2, - z * 10 + SCREEN_HEIGHT );
+			point.setFillColor( sf::Color( 17, 253, 169 ) );
+			window.draw( point );
 		}
 
 		ImGui::SFML::Render( window );
